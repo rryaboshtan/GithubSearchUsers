@@ -51,21 +51,23 @@ class Search {
    constructor(view) {
       this.view = view;
 
-      this.view.searchInput.addEventListener('keyup', this.searchUsers);
+      this.view.searchInput.addEventListener('keyup', this.loadUsers);
+       this.view.loadMore.addEventListener('click', this.loadUsers);
+       this.currentPage = 1;
    }
 
-   searchUsers = async () => {
-      return await fetch(`https://api.github.com/search/users?q=${this.view.searchInput.value}&per_page=${USER_PER_PAGE}`).then(
-         resp => {
-            if (resp.ok) {
-               resp.json().then(resp => {
-                  resp.items.forEach(user => this.view.createUser(user));
-                  //    console.log(resp);
-               });
-            } else {
-            }
+   loadUsers = async () => {
+      return await fetch(
+         `https://api.github.com/search/users?q=${this.view.searchInput.value}&per_page=${USER_PER_PAGE}&page=${currentPage}`
+      ).then(resp => {
+         if (resp.ok) {
+            resp.json().then(resp => {
+               resp.items.forEach(user => this.view.createUser(user));
+               //    console.log(resp);
+            });
+         } else {
          }
-      );
+      });
    };
 }
 new Search(new View());
