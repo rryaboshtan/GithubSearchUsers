@@ -1,10 +1,12 @@
+import debounce from '../helpers/debounce.js';
+
 const USER_PER_PAGE = 20;
 
 export class Search {
    constructor(view) {
       this.view = view;
 
-      this.view.searchInput.addEventListener('keyup', this.debounce(this.loadUsers, 500));
+      this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, 500));
       this.view.loadMore.addEventListener('click', this.loadUsers);
       this.currentPage = 1;
    }
@@ -31,20 +33,4 @@ export class Search {
    clearUsers = () => {
       this.view.usersList.innerHTML = '';
    };
-
-   debounce(func, wait, immediate) {
-      let timeout;
-      return function () {
-         const context = this,
-            args = arguments;
-         const later = function () {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-         };
-         const callNow = immediate && !timeout;
-         clearTimeout(timeout);
-         timeout = setTimeout(later, wait);
-         if (callNow) func.apply(context, args);
-      };
-   }
 }
