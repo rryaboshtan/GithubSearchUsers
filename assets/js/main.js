@@ -52,22 +52,23 @@ class Search {
       this.view = view;
 
       this.view.searchInput.addEventListener('keyup', this.loadUsers);
-       this.view.loadMore.addEventListener('click', this.loadUsers);
-       this.currentPage = 1;
+      this.view.loadMore.addEventListener('click', this.loadUsers);
+      this.currentPage = 1;
    }
 
    loadUsers = async () => {
       return await fetch(
-         `https://api.github.com/search/users?q=${this.view.searchInput.value}&per_page=${USER_PER_PAGE}&page=${currentPage}`
+         `https://api.github.com/search/users?q=${this.view.searchInput.value}&per_page=${USER_PER_PAGE}&page=${this.currentPage}`
       ).then(resp => {
          if (resp.ok) {
+            this.currentPage++;
             resp.json().then(resp => {
                resp.items.forEach(user => this.view.createUser(user));
-               //    console.log(resp);
             });
          } else {
          }
       });
    };
+
 }
 new Search(new View());
