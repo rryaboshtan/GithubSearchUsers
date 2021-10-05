@@ -1,11 +1,20 @@
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
-.app { padding: 25px; }
+.app {
+    padding: 25px;
+}
 
-.title { text-align: center; }
+.title {
+    text-align: center;
+}
 .main {
     align-items: flex-start;
-    display: flex; }
+    display: flex;
+}
 
 .search-line {
     flex-direction: column;
@@ -57,7 +66,9 @@
     margin-bottom: 10px;
 }
 
-.user-prev-name { font-weight: 600; }
+.user-prev-name {
+    font-weight: 600;
+}
 
 .user-list {
     display: flex;
@@ -72,14 +83,15 @@
 }
 
 .btn {
-     background-color: #ccc;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  height: 40px;
-  line-height: 40px;
-  display: flex; 
-  justify-content: center; 
-  margin: 50px auto 0px;
-  width: 150px;
+    background-color: #ccc;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    //   display: flex;
+    //   justify-content: center;
+    display: block;
+    margin: 50px auto 0px;
+    width: 150px;
 }
