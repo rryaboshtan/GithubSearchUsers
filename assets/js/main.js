@@ -19,6 +19,10 @@ class View {
       this.main = this.createElement('div', 'main');
       this.main.append(this.usersWrapper);
 
+      this.loadMore = this.createElement('button', 'btn');
+      this.loadMore.textContent = 'Загрузить ещё';
+      this.usersWrapper.append(this.loadMore);
+
       this.app.append(this.title);
       this.app.append(this.searchLine);
       this.app.append(this.main);
@@ -34,11 +38,14 @@ class View {
    }
 
    createUser(userData) {
-       const userElement = this.createElement('li', 'user-prev');
-       userElement.innerHTML = `<img class='user-prev-photo' src='${userData.avatar_url}' alt='${userData.login}'> 
-                                <span class='user-prev-name'>${userData.login}</span>`
+      const userElement = this.createElement('li', 'user-prev');
+      userElement.innerHTML = `<img class='user-prev-photo' src='${userData.avatar_url}' alt='${userData.login}'> 
+                               <span class='user-prev-name'>${userData.login}</span>`;
+      this.usersList.append(userElement);
    }
 }
+
+const USER_PER_PAGE = 20;
 
 class Search {
    constructor(view) {
@@ -48,37 +55,17 @@ class Search {
    }
 
    searchUsers = async () => {
-      return await fetch(`https://api.github.com/search/users?q=${this.view.searchInput.value}`).then(resp => {
-         if (resp.ok) {
-            resp.json().then(resp => {
+      return await fetch(`https://api.github.com/search/users?q=${this.view.searchInput.value}&per_page=${USER_PER_PAGE}`).then(
+         resp => {
+            if (resp.ok) {
+               resp.json().then(resp => {
                   resp.items.forEach(user => this.view.createUser(user));
-            //    console.log(resp);
-            });
-         } else {
+                  //    console.log(resp);
+               });
+            } else {
+            }
          }
-      });
+      );
    };
 }
 new Search(new View());
-
-{
-    "login": "filipw",
-    "id": 1710369,
-    "node_id": "MDQ6VXNlcjE3MTAzNjk=",
-    "avatar_url": "https://avatars.githubusercontent.com/u/1710369?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/filipw",
-    "html_url": "https://github.com/filipw",
-    "followers_url": "https://api.github.com/users/filipw/followers",
-    "following_url": "https://api.github.com/users/filipw/following{/other_user}",
-    "gists_url": "https://api.github.com/users/filipw/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/filipw/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/filipw/subscriptions",
-    "organizations_url": "https://api.github.com/users/filipw/orgs",
-    "repos_url": "https://api.github.com/users/filipw/repos",
-    "events_url": "https://api.github.com/users/filipw/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/filipw/received_events",
-    "type": "User",
-    "site_admin": false,
-    "score": 1
-}
