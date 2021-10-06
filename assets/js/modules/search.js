@@ -2,6 +2,9 @@ import debounce from '../helpers/debounce.js';
 
 const USER_PER_PAGE = 20;
 
+//TO DO
+// process backspace button and add typing after prev typing
+
 export class Search {
    constructor(view) {
       this.view = view;
@@ -11,7 +14,11 @@ export class Search {
       this.currentPage = 1;
    }
 
-   loadUsers = async () => {
+   loadUsers = async e => {
+      console.log('event.code =', e.code);
+      if (e.code === 'Backspace') {
+         this.clearUsers();
+      }
       const searchValue = this.view.searchInput.value;
       let totalCount;
       let users;
@@ -23,12 +30,12 @@ export class Search {
             if (resp.ok) {
                this.currentPage++;
                resp.json().then(resp => {
-                   totalCount = resp.total_count;
-                   console.log('currpage - 1 = ', this.currentPage - 1);
+                  totalCount = resp.total_count;
+                  console.log('currpage - 1 = ', this.currentPage - 1);
 
-                   console.log('totalcount = ', totalCount);
-                   console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
-                   
+                  console.log('totalcount = ', totalCount);
+                  console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
+
                   this.view.showLoadMoreBtn(this.showButton(totalCount) ? true : false);
                   users = resp.items;
                   users.forEach(user => this.view.createUser(user));
@@ -46,8 +53,7 @@ export class Search {
       this.currentPage = 1;
    };
 
-   showButton = (totalCount) => {
-       
+   showButton = totalCount => {
       return totalCount > USER_PER_PAGE && USER_PER_PAGE * (this.currentPage - 1) < totalCount;
    };
 }
