@@ -19,9 +19,10 @@ export class View {
       this.main = this.createElement('div', 'main');
       this.main.append(this.usersWrapper);
 
-      this.loadMore = this.createElement('button', 'btn');
-      this.loadMore.textContent = 'Загрузить ещё';
-      this.usersWrapper.append(this.loadMore);
+      this.loadMoreBtn = this.createElement('button', 'btn');
+      this.loadMoreBtn.textContent = 'Загрузить ещё';
+      this.loadMoreBtn.style.display = 'none';
+      this.usersWrapper.append(this.loadMoreBtn);
 
       this.app.append(this.title);
       this.app.append(this.searchLine);
@@ -42,5 +43,9 @@ export class View {
       userElement.innerHTML = `<img class='user-prev-photo' src='${userData.avatar_url}' alt='${userData.login}'> 
                                <span class='user-prev-name'>${userData.login}</span>`;
       this.usersList.append(userElement);
+   }
+
+   showLoadMoreBtn(show) {
+      this.loadMoreBtn.style.display = show ? 'block' : 'none';
    }
 }
