@@ -9,7 +9,7 @@ export class Search {
    constructor(view) {
       this.view = view;
 
-      this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this, 500));
+      this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this, 300));
       this.view.loadMoreBtn.addEventListener('click', this.loadUsers);
       this.currentPage = 1;
    }
@@ -24,25 +24,38 @@ export class Search {
       let users;
 
       if (searchValue) {
-         return await fetch(
-            `https://api.github.com/search/users?q=${searchValue}&per_page=${USER_PER_PAGE}&page=${this.currentPage}`
-         ).then(resp => {
-            if (resp.ok) {
-               this.currentPage++;
-               resp.json().then(resp => {
-                  totalCount = resp.total_count;
-                  console.log('currpage - 1 = ', this.currentPage - 1);
+         try {
+            return await fetch(
+               `https://api.github.com/search/users?q=${searchValue}&per_page=${USER_PER_PAGE}&page=${this.currentPage}`
+            ).then(resp => {
+               if (resp?.status === 200) {
+                  this.currentPage++;
+                     console.log('resp.status = ', resp.status);
 
-                  console.log('totalcount = ', totalCount);
-                  console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
+                  resp.json().then(resp => {
+                     if (resp?.items?.length) {
+                         console.log('resp = ', resp);
+                         totalCount = resp.total_count;
+                         console.log('currpage - 1 = ', this.currentPage - 1);
 
-                  this.view.showLoadMoreBtn(this.showButton(totalCount) ? true : false);
-                  users = resp.items;
-                  users.forEach(user => this.view.createUser(user));
-               });
-            } else {
-            }
-         });
+                         console.log('totalcount = ', totalCount);
+                         console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
+
+                         this.view.showLoadMoreBtn(this.showButton(totalCount) ? true : false);
+                         users = resp.items;
+                         console.log('resp.items ', resp.items);
+
+                         users.forEach(user => this.view.createUser(user));
+                     }
+                    
+                  });
+               } else {
+                  throw new Error('github users responce is failed');
+               }
+            });
+         } catch (e) {
+            throw new Error(e);
+         }
       } else {
          this.clearUsers();
       }
