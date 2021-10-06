@@ -11,6 +11,7 @@ export class Search {
 
       this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this, 300));
       this.view.loadMoreBtn.addEventListener('click', this.loadUsers);
+      this.totalCount;
       this.currentPage = 1;
    }
 
@@ -20,7 +21,6 @@ export class Search {
          this.clearUsers();
       }
       const searchValue = this.view.searchInput.value;
-      let totalCount;
       let users;
 
       if (searchValue) {
@@ -28,26 +28,25 @@ export class Search {
             return await fetch(
                `https://api.github.com/search/users?q=${searchValue}&per_page=${USER_PER_PAGE}&page=${this.currentPage}`
             ).then(resp => {
-               if (resp?.status === 200) {
+               if (resp.status === 200) {
                   this.currentPage++;
-                     console.log('resp.status = ', resp.status);
+                  console.log('resp.status = ', resp.status);
 
                   resp.json().then(resp => {
-                     if (resp?.items?.length) {
-                         console.log('resp = ', resp);
-                         totalCount = resp.total_count;
-                         console.log('currpage - 1 = ', this.currentPage - 1);
+                     // if (resp?.items?.length) {
+                        console.log('resp = ', resp);
+                        this.totalCount = resp.total_count;
+                        console.log('currpage - 1 = ', this.currentPage - 1);
 
-                         console.log('totalcount = ', totalCount);
-                         console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
+                        console.log('this.totalcount = ', this.totalCount);
+                        console.log('currpage  * USER = ', USER_PER_PAGE * (this.currentPage - 1));
 
-                         this.view.showLoadMoreBtn(this.showButton(totalCount) ? true : false);
-                         users = resp.items;
-                         console.log('resp.items ', resp.items);
+                        this.view.showLoadMoreBtn(this.showButton());
+                        users = resp.items;
+                        console.log('resp.items ', resp.items);
 
-                         users.forEach(user => this.view.createUser(user));
-                     }
-                    
+                        users.forEach(user => this.view.createUser(user));
+                     // }
                   });
                } else {
                   throw new Error('github users responce is failed');
@@ -64,10 +63,14 @@ export class Search {
    clearUsers = () => {
       this.view.usersList.innerHTML = '';
       this.currentPage = 1;
+      this.totalCount = 0;
+      console.log('this.showButton', this.showButton());
+      console.log('this.totalcount = ', this.totalCount)
+      this.view.showLoadMoreBtn(this.showButton());
    };
 
-   showButton = totalCount => {
-      return totalCount > USER_PER_PAGE && USER_PER_PAGE * (this.currentPage - 1) < totalCount;
+   showButton = () => {
+      return this.totalCount > USER_PER_PAGE && USER_PER_PAGE * (this.currentPage - 1) < this.totalCount;
    };
 }
 
