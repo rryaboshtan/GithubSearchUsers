@@ -1,12 +1,11 @@
 import debounce from '../helpers/debounce.js';
 
-const USER_PER_PAGE = 20;
 
 //TO DO
 // process backspace button and add typing after prev typing
 
 export class Search {
-   constructor(view) {
+   constructor(view, api) {
       this.view = view;
 
       this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this, 300));
@@ -59,6 +58,8 @@ export class Search {
          this.clearUsers();
       }
    };
+
+   
 
    clearUsers = () => {
       this.view.usersList.innerHTML = '';
