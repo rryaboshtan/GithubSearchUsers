@@ -9,4 +9,15 @@ export class Api {
          console.error('Error: ', e);
       }
    }
+
+   loadUserDetails(login) {
+      const urls = [
+         `${URL}users/${login}/following`,
+         `${URL}users/${login}/followers`,
+         `${URL}users/${login}/repos`
+      ];
+      const requests = urls.map(url => fetch(url));
+      return Promise.all(requests)
+         .then(responses => Promise.all((responses).map(resp => resp.json())));
+   }
 }

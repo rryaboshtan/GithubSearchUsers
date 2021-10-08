@@ -1,5 +1,6 @@
 export class View {
-   constructor() {
+   constructor(api) {
+      this.api = api;
       this.app = document.getElementById('app');
 
       this.title = this.createElement('h1', 'title');
@@ -40,9 +41,35 @@ export class View {
 
    createUser(userData) {
       const userElement = this.createElement('li', 'user-prev');
+      userElement.addEventListener('click', () => this.showUserDetails(userData));
       userElement.innerHTML = `<img class='user-prev-photo' src='${userData.avatar_url}' alt='${userData.login}'> 
                                <span class='user-prev-name'>${userData.login}</span>`;
       this.usersList.append(userElement);
+   }
+
+   showUserDetails(userData) {
+      const user = this.createElement('div', 'user');
+      const data = this.api.loadUserDetails(userData.login).then(res => {
+         const [following, followers, repos] = res;
+         const followingList = this.createDataList(following, 'Following');
+
+         user.innerHTML = `<img src='${userData.avatar_url}' alt='${userData.login}'>
+                           <h2>${userData.login}</h2>
+                           ${followingList}`;
+      });
+
+      this.main.append(user);
+   }
+
+   createDataList(list, title) {
+      const block = this.createElement('div', 'user-block');
+      const titleTag = this.createElement('h3', 'user-block-title');
+      const listTag = this.createElement('li', 'user-list');
+      titleTag.textContent = title;
+
+      block.append(titleTag);
+
+      return block.innerHTML;
    }
 
    showLoadMoreBtn(show) {

@@ -48,6 +48,7 @@ export class Search {
          }
       } else {
          this.clearUsers();
+         this.view.setCounterMessage(this.log.counterMessage(''));
       }
    };
 
