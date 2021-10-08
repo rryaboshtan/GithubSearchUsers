@@ -2,6 +2,8 @@ export class View {
    constructor(api) {
       this.api = api;
       this.app = document.getElementById('app');
+      this.user = this.createElement('div', 'user');
+
 
       this.title = this.createElement('h1', 'title');
       this.title.textContent = 'GitHub Search Users';
@@ -48,17 +50,25 @@ export class View {
    }
 
    showUserDetails(userData) {
-      const user = this.createElement('div', 'user');
       const data = this.api.loadUserDetails(userData.login).then(res => {
          const [following, followers, repos] = res;
          const followingList = this.createDataList(following, 'Following');
+         const followersList = this.createDataList(followers, 'Followers');
+         const reposList = this.createDataList(repos, 'Repositories');
 
-         user.innerHTML = `<img src='${userData.avatar_url}' alt='${userData.login}'>
+         if (this.user.innerHTML) {
+            this.user.innerHTML = '';
+         }
+
+         this.user.innerHTML = `<img src='${userData.avatar_url}' alt='${userData.login}'>
                            <h2>${userData.login}</h2>
-                           ${followingList}`;
+                           ${followingList}
+                           ${followersList}
+                           ${reposList}
+                           `;
       });
 
-      this.main.append(user);
+      this.main.append(this.user);
    }
 
    createDataList(list, title) {
