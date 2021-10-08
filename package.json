@@ -1,0 +1,22 @@
+{
+   "name": "githubuserssearch",
+   "version": "1.0.0",
+   "description": "- Vanilla JS\r     - GitHub API\r ## [Demo version](https://rryaboshtan.github.io/GithubSearchUsers/)",
+   "main": "index.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "predeploy": "npm run build",
+      "deploy": "gh-pages -d build"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rryaboshtan/GithubSearchUsers.git"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/rryaboshtan/GithubSearchUsers/issues"
+   },
+   "homepage": "https://github.com/rryaboshtan/GithubSearchUsers#readme"
+}
