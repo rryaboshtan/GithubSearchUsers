@@ -1,13 +1,13 @@
 ## Used technologies
     - Vanilla JS
     - GitHub API
-## [Demo version](https://rryaboshtan.github.io/ReactAdminDashboard/)
+## [Demo version](https://rryaboshtan.github.io/GithubSearchUsers/)
 
 ### Screenshots
 ![](screenshots/screenshot1.png)
 ![](screenshots/screenshot2.png)
 
-## React Admin Dashboard with Multiple Themes
+## Application for finding an additional information about Github Users
 
  ## Getting started
     You must clone the repo:
@@ -17,6 +17,6 @@
      npm i -g http-server
 
     Then type in the VSCode or other command line 
-    cd GithubSearchUsers
+    cd GithubSearchUsers/
     npx http-server
     and go to proposed link (it may be http://77.122.1.88:8080/ in the browser) 
