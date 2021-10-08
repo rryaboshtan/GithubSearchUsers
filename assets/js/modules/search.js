@@ -14,6 +14,7 @@ export class Search {
    }
 
    loadUsers = e => {
+      let message = '';
       this.view.setCounterMessage('');
       if (e.code === 'Backspace') {
          this.clearUsers();
@@ -30,7 +31,8 @@ export class Search {
                   resp.json().then(resp => {
                      // if (resp?.items?.length) {
                      this.totalCount = resp.total_count;
-                     this.view.setCounterMessage(this.totalCount);
+                     message = this.log.counterMessage(this.totalCount);
+                     this.view.setCounterMessage(message);
                      this.view.showLoadMoreBtn(this.showButton());
                      users = resp.items;
 
