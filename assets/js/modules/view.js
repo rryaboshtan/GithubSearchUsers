@@ -48,4 +48,8 @@ export class View {
    showLoadMoreBtn(show) {
       this.loadMoreBtn.style.display = show ? 'block' : 'none';
    }
+
+   setCounterMessage(message) {
+      this.searchCounter.textContent = message;
+   }
 }
