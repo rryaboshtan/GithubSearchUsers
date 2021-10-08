@@ -1,11 +1,11 @@
 import debounce from '../helpers/debounce.js';
+import counterMessage from '../helpers/counterMessage.js';
 const USER_PER_PAGE = 20;
 
 export class Search {
-   constructor(view, api, log) {
+   constructor(view, api) {
       this.view = view;
       this.api = api;
-      this.log = log;
 
       this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this));
       this.view.loadMoreBtn.addEventListener('click', this.loadUsers);
@@ -29,15 +29,17 @@ export class Search {
                   this.currentPage++;
 
                   resp.json().then(resp => {
-                     // if (resp?.items?.length) {
                      this.totalCount = resp.total_count;
-                     message = this.log.counterMessage(this.totalCount);
+                     message = counterMessage(this.totalCount);
+
+                     if (!resp?.items?.length) {
+                        message = counterMessage('');
+                     }
                      this.view.setCounterMessage(message);
                      this.view.showLoadMoreBtn(this.showButton());
                      users = resp.items;
 
                      users.forEach(user => this.view.createUser(user));
-                     // }
                   });
                } else {
                   throw new Error('github users responce is failed');
@@ -48,7 +50,7 @@ export class Search {
          }
       } else {
          this.clearUsers();
-         this.view.setCounterMessage(this.log.counterMessage(''));
+         this.view.setCounterMessage(counterMessage(''));
       }
    };
 
