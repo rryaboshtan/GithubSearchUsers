@@ -4,7 +4,6 @@ export class View {
       this.app = document.getElementById('app');
       this.user = this.createElement('div', 'user');
 
-
       this.title = this.createElement('h1', 'title');
       this.title.textContent = 'GitHub Search Users';
 
@@ -74,10 +73,18 @@ export class View {
    createDataList(list, title) {
       const block = this.createElement('div', 'user-block');
       const titleTag = this.createElement('h3', 'user-block-title');
-      const listTag = this.createElement('li', 'user-list');
+      const listTag = this.createElement('ul', 'user-list');
       titleTag.textContent = title;
 
+      list.forEach(item => {
+         const el = this.createElement('li', 'user-list-item');
+         el.innerHTML = `<a href='${item.html_url}'>${item.login ? item.login : item.name}</a>`;
+
+         listTag.append(el);
+      });
+
       block.append(titleTag);
+      block.append(listTag);
 
       return block.innerHTML;
    }
