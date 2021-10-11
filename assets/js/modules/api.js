@@ -1,5 +1,6 @@
 const URL = 'https://api.github.com/';
-const USER_PER_PAGE = 20;
+
+export const USER_PER_PAGE = 20;
 
 export class Api {
    async loadUsers(value, page) {

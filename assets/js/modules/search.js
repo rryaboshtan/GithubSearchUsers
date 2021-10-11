@@ -1,6 +1,6 @@
 import debounce from '../helpers/debounce.js';
 import counterMessage from '../helpers/counterMessage.js';
-const USER_PER_PAGE = 20;
+import { USER_PER_PAGE } from './api.js';
 
 export class Search {
    constructor(view, api) {
