@@ -68,8 +68,21 @@ export class View {
    showUserDetails(userData) {
       const data = this.api.loadUserDetails(userData.login).then(res => {
          const [following, followers, repos] = res;
+
+         if (!following.length) {
+            throw new Error('following list: must not be empty');
+         }
+         if (!followers.length) {
+            throw new Error('followers list: must not be empty');
+         }
+         if (!repos.length) {
+            throw new Error('repos list: must not be empty');
+         }
+
          const followingList = this.createDataList(following, 'Following');
+
          const followersList = this.createDataList(followers, 'Followers');
+
          const reposList = this.createDataList(repos, 'Repositories');
 
          if (this.user.innerHTML) {

@@ -7,10 +7,15 @@ export class Search {
       this.view = view;
       this.api = api;
 
-      this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this));
-      this.view.loadMoreBtn.addEventListener('click', this.loadUsers);
       this.totalCount = null;
       this.currentPage = 1;
+
+      this.init();
+   }
+
+   init() {
+      this.view.searchInput.addEventListener('keyup', debounce(this.loadUsers, this));
+      this.view.loadMoreBtn.addEventListener('click', this.loadUsers);
    }
 
    loadUsers = e => {
