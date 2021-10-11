@@ -1,34 +1,51 @@
 export class View {
    constructor(api) {
       this.api = api;
-      this.app = document.getElementById('app');
-      this.user = this.createElement('div', 'user');
+      this.app = null;
+      this.user = null;
+      this.title = null;
 
-      this.title = this.createElement('h1', 'title');
-      this.title.textContent = 'GitHub Search Users';
+      this.searchLine = null;
+      this.searchInput = null;
+      this.searchCounter = null;
+      this.usersWrapper = null;
+      this.usersList = null;
 
-      this.searchLine = this.createElement('div', 'search-line');
-      this.searchInput = this.createElement('input', 'search-input');
-      this.searchCounter = this.createElement('span', 'counter');
+      this.main = null;
+      this.loadMoreBtn = null;
 
-      this.searchLine.append(this.searchInput);
-      this.searchLine.append(this.searchCounter);
+      this.init();
+   }
 
-      this.usersWrapper = this.createElement('div', 'users-wrapper');
-      this.usersList = this.createElement('ul', 'users');
-      this.usersWrapper.append(this.usersList);
+   init() {
+        this.app = document.getElementById('app');
+        this.user = this.createElement('div', 'user');
 
-      this.main = this.createElement('div', 'main');
-      this.main.append(this.usersWrapper);
+        this.title = this.createElement('h1', 'title');
+        this.title.textContent = 'GitHub Search Users';
 
-      this.loadMoreBtn = this.createElement('button', 'btn');
-      this.loadMoreBtn.textContent = 'Загрузить ещё';
-      this.loadMoreBtn.style.display = 'none';
-      this.usersWrapper.append(this.loadMoreBtn);
+        this.searchLine = this.createElement('div', 'search-line');
+        this.searchInput = this.createElement('input', 'search-input');
+        this.searchCounter = this.createElement('span', 'counter');
 
-      this.app.append(this.title);
-      this.app.append(this.searchLine);
-      this.app.append(this.main);
+        this.searchLine.append(this.searchInput);
+        this.searchLine.append(this.searchCounter);
+
+        this.usersWrapper = this.createElement('div', 'users-wrapper');
+        this.usersList = this.createElement('ul', 'users');
+        this.usersWrapper.append(this.usersList);
+
+        this.main = this.createElement('div', 'main');
+        this.main.append(this.usersWrapper);
+
+        this.loadMoreBtn = this.createElement('button', 'btn');
+        this.loadMoreBtn.textContent = 'Загрузить ещё';
+        this.loadMoreBtn.style.display = 'none';
+        this.usersWrapper.append(this.loadMoreBtn);
+
+        this.app.append(this.title);
+        this.app.append(this.searchLine);
+        this.app.append(this.main);
    }
 
    createElement(elementTag, elementClass) {
@@ -69,6 +86,8 @@ export class View {
 
       this.main.append(this.user);
    }
+
+ 
 
    createDataList(list, title) {
       const block = this.createElement('div', 'user-block');

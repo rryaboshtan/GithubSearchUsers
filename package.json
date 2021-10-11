@@ -1,4 +1,5 @@
 {
+   "homepage": "https://rryaboshtan.github.io/GithubSearchUsers/",
    "name": "githubuserssearch",
    "version": "1.0.0",
    "description": "- Vanilla JS\r     - GitHub API\r ## [Demo version](https://rryaboshtan.github.io/GithubSearchUsers/)",
@@ -18,5 +19,7 @@
    "bugs": {
       "url": "https://github.com/rryaboshtan/GithubSearchUsers/issues"
    },
-   "homepage": "https://github.com/rryaboshtan/GithubSearchUsers#readme"
+   "devDependencies": {
+      "gh-pages": "^3.2.3"
+   }
 }
