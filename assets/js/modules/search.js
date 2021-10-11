@@ -64,6 +64,9 @@ export class Search {
       this.currentPage = 1;
       this.totalCount = 0;
       this.view.showLoadMoreBtn(this.showButton());
+      // if (this.view.user.innerHTML) {
+      //    this.view.user.innerHTML = '';
+      // }
    };
 
    showButton = () => {

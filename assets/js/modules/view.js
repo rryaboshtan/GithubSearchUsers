@@ -89,14 +89,14 @@ export class View {
             this.user.innerHTML = '';
          }
 
-         this.renderUser(this.user, userData, followingList, followersList, reposList);
+         this.renderUser(userData, followingList, followersList, reposList);
       });
 
       this.main.append(this.user);
    }
 
-   renderUser(user, userData, followingList, followersList, reposList) {
-      user.innerHTML = `<img src='${userData.avatar_url}' alt='${userData.login}'>
+   renderUser(userData, followingList, followersList, reposList) {
+      this.user.innerHTML = `<img src='${userData.avatar_url}' alt='${userData.login}'>
                            <h2>${userData.login}</h2>
                            ${followingList}
                            ${followersList}
